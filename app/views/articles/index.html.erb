@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-body">
+    <h2 class='card-title d-flex justify-content-between mb-4'>
+      <span>Articles</span>
+      <%= link_to 'New Article', new_article_path, class: 'btn btn-primary' %>
+    </h2>
+
+    <% @articles.each do |article| %>
+      <%= link_to article, class: 'text-decoration-none' do %>
+        <div class="card article-card mb-3">
+          <div class="card-body">
+            <div class="mb-3">  
+                <%= article.domain %>
+            </div>
+            <h5 class='card-title text-dark'><b><%= article.name %></b></h5>
+            <p class='text-secondary'><%= article.description %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

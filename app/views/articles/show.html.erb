@@ -1,0 +1,57 @@
+<%= link_to 'Back', articles_path, class: 'btn btn-secondary mb-3' %>
+<div class="card">
+  <div class="card-body">
+    <h2 class='card-title d-flex justify-content-between mb-4'>
+      <span><%= @article.name %></span>
+      <div>
+        <%= link_to 'Edit', edit_article_path(@article), class: 'btn btn-light' %>
+        <%= button_to 'Destroy', @article, class: 'btn btn-dark',  method: :delete, data: { confirm: 'Are you sure?' ,"turbo-method": :delete } %>
+      </div>
+    </h2>
+
+    <div class="mb-4">
+      <h6>Add Comments</h6>
+      <%= form_for([@comment.article, @comment]) do |f| %>
+        <% if @comment.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+            <ul>
+            <% @comment.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="input-group">
+          <%= f.text_field :name, class: 'form-control', placeholder: 'Enter comment name...' %>
+          <div class="input-group-append">
+            <%= f.submit class: 'btn btn-primary' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <h4>Comments</h4>
+    <% @article.comments.each do |comment| %>
+      <% if comment.persisted? %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <span class="badge badge- mb-5"></span>
+              <div>
+                <%= link_to 'Edit', edit_article_comment_path(comment.article, comment), class: 'btn btn-light btn-sm' %>
+                <%= button_to 'Destroy', [comment.article, comment], class: 'btn btn-dark btn-sm' , method: :delete, data: { confirm: 'Are you sure?', "turbo-method": :delete } %>
+              </div>
+            </div>
+            <h5 class='card-title mb-2'>
+              <span><%= comment.name %></span>
+            </h5>
+            <p><%= comment.description %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end%>
+
+  </div>
+</div>
